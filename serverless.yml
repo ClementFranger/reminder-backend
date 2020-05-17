@@ -5,7 +5,6 @@ package:
 
 plugins:
   - serverless-python-requirements
-
 provider:
   name: aws
   runtime: python3.7
@@ -13,7 +12,7 @@ provider:
   region: eu-west-3
 
   environment:
-    REMINDER_TABLE: '${self:service}'
+    REMINDER_TABLE: 'reminder'
 
   iamRoleStatements:
     - Effect: Allow
