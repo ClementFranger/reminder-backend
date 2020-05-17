@@ -1,4 +1,4 @@
-service: reminder-backend
+service: reminder
 
 package:
   individually: true
@@ -12,14 +12,14 @@ provider:
   region: eu-west-3
 
   environment:
-    REMINDER_TABLE: 'reminder'
+    DYNAMODB_TABLE: ${self:service}
 
   iamRoleStatements:
     - Effect: Allow
       Action:
        - dynamodb:GetItem
        - dynamodb:PutItem
-      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.REMINDER_TABLE}"
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
 
 functions:
   get:
@@ -29,10 +29,14 @@ functions:
           path: dynamodb/{id}
           method: get
           cors: true
+    layers:
+      - "arn:aws:lambda:${opt:region, self:provider.region}:*:layer:aws-utils:7"
   create:
-    handler: reminder/dynamodb/create.create
+    handler: reminder/dynamodb/create_reminder.create_reminder
     events:
       - http:
           path: dynamodb
           method: post
           cors: true
+    layers:
+      - "arn:aws:lambda:${opt:region, self:provider.region}:*:layer:aws-utils:7"
