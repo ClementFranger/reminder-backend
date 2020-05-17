@@ -30,7 +30,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:*:layer:aws-utils:7"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:*:layer:aws-utils:8"
   create:
     handler: reminder/dynamodb/create_reminder.create_reminder
     events:
@@ -39,4 +39,4 @@ functions:
           method: post
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:*:layer:aws-utils:7"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:*:layer:aws-utils:8"
