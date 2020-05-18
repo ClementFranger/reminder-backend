@@ -5,6 +5,7 @@ package:
 
 plugins:
   - serverless-python-requirements
+
 provider:
   name: aws
   runtime: python3.7
@@ -14,6 +15,7 @@ provider:
   environment:
     ACCOUNT: '166257563783'
     DYNAMODB_TABLE: ${self:service}
+    AWS_UTILS: "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:9"
 
   iamRoleStatements:
     - Effect: Allow
@@ -32,7 +34,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:8"
+      - ${self:provider.environment.AWS_UTILS}
   create:
     handler: reminder/dynamodb/create_reminder.create_reminder
     events:
@@ -41,7 +43,7 @@ functions:
           method: post
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:8"
+      - ${self:provider.environment.AWS_UTILS}
   scan:
     handler: reminder/dynamodb/get_all_reminders.get_all_reminders
     events:
@@ -50,4 +52,4 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:8"
+      - ${self:provider.environment.AWS_UTILS}
