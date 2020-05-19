@@ -1,7 +1,7 @@
 import json
 import os
 import logging
-from datetime import date
+from datetime import date, datetime
 
 from dynamodb.scan import scan
 from utils import success, DecimalEncoder
@@ -15,6 +15,7 @@ def get_today_reminders(event, context):
 
     params = {'TableName': os.environ['DYNAMODB_TABLE']}
 
-    days = (date.today() - date(date.today().year, 1, 1)).days
-    return success(body=json.dumps([d for d in json.load(scan(params=params).get('body')) if days % d.frequency == 0],
-                                   cls=DecimalEncoder))
+    body = json.loads(scan(params=params).get('body'))
+    return success(body=json.dumps([d for d in body if
+                                    (date.today() - datetime.strptime(d.get('start'), "%d/%m/%Y").date()).days % int(
+                                        d.get('frequency')) == 0], cls=DecimalEncoder))
