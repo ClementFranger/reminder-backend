@@ -21,5 +21,5 @@ def get_filter_reminders(event, context):
         return failure(code=400, body='You should provide a filter to your payload')
 
     params = {'TableName': os.environ['DYNAMODB_TABLE'],
-              'FilterExpression': reduce(lambda a, b: a & b, [Attr(k).eq(v) for k, v in body.get('filter').items])}
+              'FilterExpression': reduce(lambda a, b: a & b, [Attr(k).eq(v) for k, v in body.get('filter').items()])}
     return scan(event, context, params=params)
