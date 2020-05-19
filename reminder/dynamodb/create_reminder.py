@@ -21,4 +21,4 @@ def create_reminder(event, context):
         'TableName': os.environ['DYNAMODB_TABLE'],
         'Item': body
     }
-    return create(event, context, key=id, params=params)
+    return create(key=id, params=params)

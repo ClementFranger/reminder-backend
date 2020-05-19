@@ -10,4 +10,4 @@ def get_all_reminders(event, context):
     logger.info('event : {event}'.format(event=event))
 
     params = {'TableName': os.environ['DYNAMODB_TABLE']}
-    return scan(event, context, params=params)
+    return scan(params=params)

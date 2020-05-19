@@ -19,4 +19,4 @@ def get_reminder(event, context):
         'TableName': os.environ['DYNAMODB_TABLE'],
         'Key': {'id': id}
     }
-    return get(event, context, key=id, params=params)
+    return get(key=id, params=params)

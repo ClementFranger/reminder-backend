@@ -22,4 +22,4 @@ def get_filter_reminders(event, context):
 
     params = {'TableName': os.environ['DYNAMODB_TABLE'],
               'FilterExpression': reduce(lambda a, b: a & b, [Attr(k).eq(v) for k, v in body.get('filter').items()])}
-    return scan(event, context, params=params)
+    return scan(params=params)
