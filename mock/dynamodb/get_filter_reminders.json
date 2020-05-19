@@ -1,7 +1,7 @@
 {
   "body": {
     "filter": {
-      "id": "chambre"
+      "description": "Nettoyer baignoire"
     }
   }
 }
