@@ -26,29 +26,47 @@ provider:
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
 
 functions:
-  get:
+  get_reminder:
     handler: reminder/dynamodb/get_reminder.get_reminder
     events:
       - http:
-          path: dynamodb/{id}
+          path: reminders/{id}
           method: get
           cors: true
     layers:
       - ${self:provider.environment.AWS_UTILS}
-  create:
+  create_reminder:
     handler: reminder/dynamodb/create_reminder.create_reminder
     events:
       - http:
-          path: dynamodb
+          path: reminders
           method: post
           cors: true
     layers:
       - ${self:provider.environment.AWS_UTILS}
-  scan:
+  get_all_reminders:
     handler: reminder/dynamodb/get_all_reminders.get_all_reminders
     events:
       - http:
-          path: dynamodb
+          path: reminders
+          method: get
+          cors: true
+    layers:
+      - ${self:provider.environment.AWS_UTILS}
+  get_filter_reminders:
+    handler: reminder/dynamodb/get_filter_reminders.get_filter_reminders
+    events:
+      - http:
+          path: reminders/filter
+          method: post
+          cors: true
+    layers:
+      - ${self:provider.environment.AWS_UTILS}
+  get_today_reminders:
+    handler: reminder/dynamodb/get_today_reminders.get_today_reminders
+    events:
+      - http:
+          path: reminders/today
           method: get
           cors: true
     layers:
