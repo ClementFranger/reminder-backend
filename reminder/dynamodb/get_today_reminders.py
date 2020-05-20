@@ -15,7 +15,16 @@ def get_today_reminders(event, context):
 
     params = {'TableName': os.environ['DYNAMODB_TABLE']}
 
-    body = json.loads(scan(params=params).get('body'))
-    return success(body=json.dumps([d for d in body if
-                                    (date.today() - datetime.strptime(d.get('start'), "%d/%m/%Y").date()).days % int(
-                                        d.get('frequency')) == 0], cls=DecimalEncoder))
+    body = today_reminders(json.loads(scan(params=params).get('body')))
+
+    return success(body=body, cls=DecimalEncoder)
+
+
+def today_reminders(reminders):
+    result = []
+    for r in reminders:
+        days = (date.today() - datetime.strptime(r.get('start'), "%d/%m/%Y").date()).days
+        frequency = int(r.get('frequency'))
+        if (frequency == 0 and days == 0) or (frequency != 0 and days % frequency == 0):
+            result.append(r)
+    return result
