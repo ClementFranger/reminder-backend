@@ -17,7 +17,7 @@ def get_today_reminders(event, context):
 
     body = today_reminders(json.loads(scan(params=params).get('body')))
 
-    return success(body=body, cls=DecimalEncoder)
+    return success(body=json.dumps(body), cls=DecimalEncoder)
 
 
 def today_reminders(reminders):
