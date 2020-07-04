@@ -1,0 +1,9 @@
+{
+  "body": {
+    "id": "unittest",
+    "title": "title",
+    "description": "description",
+    "frequency": 0,
+    "start" : "01/01/9999"
+  }
+}

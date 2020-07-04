@@ -30,34 +30,34 @@ functions:
     handler: reminder/dynamodb/get_reminder.get_reminder
     events:
       - http:
-          path: reminders/{id}
+          path: reminder/{id}
           method: get
           cors: true
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
-  create_reminder:
-    handler: reminder/dynamodb/create_reminder.create_reminder
+  put_reminder:
+    handler: reminder/dynamodb/put_reminder.put_reminder
     events:
       - http:
-          path: reminders
+          path: reminder
           method: post
           cors: true
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
-  get_all_reminders:
-    handler: reminder/dynamodb/get_all_reminders.get_all_reminders
+  scan_reminders:
+    handler: reminder/dynamodb/scan_reminders.scan_reminders
     events:
       - http:
-          path: reminders
+          path: reminder
           method: get
           cors: true
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
-  get_filter_reminders:
-    handler: reminder/dynamodb/get_filter_reminders.get_filter_reminders
+  filter_scan_reminders:
+    handler: reminder/dynamodb/filter_scan_reminders.filter_scan_reminders
     events:
       - http:
-          path: reminders/filter
+          path: reminder/filter
           method: post
           cors: true
     layers:
@@ -66,7 +66,7 @@ functions:
     handler: reminder/dynamodb/get_today_reminders.get_today_reminders
     events:
       - http:
-          path: reminders/today
+          path: reminder/today
           method: get
           cors: true
     layers:

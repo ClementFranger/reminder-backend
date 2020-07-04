@@ -1,9 +1,0 @@
-{
-  "body": {
-    "id": "test",
-    "title": "Baignoire",
-    "description": "Nettoyer baignoire",
-    "frequency": 90,
-    "start" : "18/05/2020"
-  }
-}
