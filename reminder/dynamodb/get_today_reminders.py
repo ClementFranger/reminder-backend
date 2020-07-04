@@ -1,11 +1,12 @@
 from datetime import date, datetime
 
 from dynamodb.dynamodb import DynamoDB
-from utils import success
+from utils import success, cors
 
 
+@cors(ips=['*'])
 def get_today_reminders(event, context, **kwargs):
-    return success(body=today_reminders(DynamoDB(**kwargs).scan().get('Items')), headers={'Access-Control-Allow-Origin': 'https://master.*.amplifyapp.com/'})
+    return success(body=today_reminders(DynamoDB(**kwargs).scan().get('Items')), headers={'Access-Control-Allow-Origin': '*'})
 
 
 def today_reminders(reminders):
