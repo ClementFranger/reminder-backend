@@ -2,11 +2,11 @@ import json
 import os
 import unittest
 
-from dynamodb.filter_scan_reminders import filter_scan_reminders
-from dynamodb.get_reminder import get_reminder
-from dynamodb.get_today_reminders import get_today_reminders
-from dynamodb.put_reminder import put_reminder
-from dynamodb.scan_reminders import scan_reminders
+from reminder.dynamodb.filter_scan_reminders import filter_scan_reminders
+from reminder.dynamodb.get_reminder import get_reminder
+from reminder.dynamodb.get_today_reminders import get_today_reminders
+from reminder.dynamodb.put_reminder import put_reminder
+from reminder.dynamodb.scan_reminders import scan_reminders
 
 
 class TestDynamoDB(unittest.TestCase):
