@@ -5,7 +5,7 @@ from utils import success
 
 
 def get_today_reminders(event, context, **kwargs):
-    return success(body=today_reminders(DynamoDB(**kwargs).scan().get('Items')), headers={'Access-Control-Allow-Origin': '*'})
+    return success(body=today_reminders(DynamoDB(**kwargs).scan().get('Items')), headers={'Access-Control-Allow-Origin': 'https://master.*.amplifyapp.com/'})
 
 
 def today_reminders(reminders):
