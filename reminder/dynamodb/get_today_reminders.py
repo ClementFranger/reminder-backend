@@ -1,23 +1,11 @@
-import json
-import os
-import logging
 from datetime import date, datetime
 
-from dynamodb.scan import scan
-from utils import success, DecimalEncoder
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+from dynamodb.dynamodb import DynamoDB
+from utils import success
 
 
-def get_today_reminders(event, context):
-    logger.info('event : {event}'.format(event=event))
-
-    params = {'TableName': os.environ['DYNAMODB_TABLE']}
-
-    body = today_reminders(json.loads(scan(params=params).get('body')))
-
-    return success(body=json.dumps(body), cls=DecimalEncoder)
+def get_today_reminders(event, context, **kwargs):
+    return success(body=today_reminders(DynamoDB(**kwargs).scan().get('Items')))
 
 
 def today_reminders(reminders):
