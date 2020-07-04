@@ -15,7 +15,7 @@ provider:
   environment:
     ACCOUNT: '166257563783'
     DYNAMODB_TABLE: ${self:service}
-    AWS_UTILS: "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:13"
+    AWS_UTILS: 14
 
   iamRoleStatements:
     - Effect: Allow
@@ -34,7 +34,7 @@ functions:
           method: get
           cors: true
     layers:
-      - ${self:provider.environment.AWS_UTILS}
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
   create_reminder:
     handler: reminder/dynamodb/create_reminder.create_reminder
     events:
@@ -43,7 +43,7 @@ functions:
           method: post
           cors: true
     layers:
-      - ${self:provider.environment.AWS_UTILS}
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
   get_all_reminders:
     handler: reminder/dynamodb/get_all_reminders.get_all_reminders
     events:
@@ -52,7 +52,7 @@ functions:
           method: get
           cors: true
     layers:
-      - ${self:provider.environment.AWS_UTILS}
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
   get_filter_reminders:
     handler: reminder/dynamodb/get_filter_reminders.get_filter_reminders
     events:
@@ -61,7 +61,7 @@ functions:
           method: post
           cors: true
     layers:
-      - ${self:provider.environment.AWS_UTILS}
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
   get_today_reminders:
     handler: reminder/dynamodb/get_today_reminders.get_today_reminders
     events:
@@ -70,4 +70,4 @@ functions:
           method: get
           cors: true
     layers:
-      - ${self:provider.environment.AWS_UTILS}
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
