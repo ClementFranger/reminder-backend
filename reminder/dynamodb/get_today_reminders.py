@@ -6,6 +6,7 @@ from utils import success, cors
 
 @cors(ips=['https://master.d2as5trm2mnw5s.amplifyapp.com'])
 def get_today_reminders(event, context, **kwargs):
+    print(kwargs)
     return success(body=today_reminders(DynamoDB(**kwargs).scan().get('Items')), **kwargs)
 
 
