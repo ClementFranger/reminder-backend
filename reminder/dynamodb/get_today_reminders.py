@@ -4,7 +4,7 @@ from dynamodb.dynamodb import DynamoDB
 from utils import success, cors
 
 
-@cors(ips=r"^https://master\..+\.amplifyapp\.com$")
+@cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000/$"])
 def get_today_reminders(event, context, **kwargs):
     return success(body=today_reminders(DynamoDB(**kwargs).scan().get('Items')), **kwargs)
 
