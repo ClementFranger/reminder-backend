@@ -9,13 +9,13 @@ plugins:
 provider:
   name: aws
   runtime: python3.7
-  stage: dev
+  stage: master
   region: eu-west-3
 
   environment:
     ACCOUNT: '166257563783'
     DYNAMODB_TABLE: ${self:service}
-    AWS_UTILS: 29
+    AWS_UTILS: 1
 
   iamRoleStatements:
     - Effect: Allow
@@ -34,7 +34,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   put_reminder:
     handler: reminder/dynamodb/put_reminder.put_reminder
     events:
@@ -43,7 +43,7 @@ functions:
           method: post
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   scan_reminders:
     handler: reminder/dynamodb/scan_reminders.scan_reminders
     events:
@@ -52,7 +52,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   filter_scan_reminders:
     handler: reminder/dynamodb/filter_scan_reminders.filter_scan_reminders
     events:
@@ -61,7 +61,7 @@ functions:
           method: post
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   get_today_reminders:
     handler: reminder/dynamodb/get_today_reminders.get_today_reminders
     events:
@@ -70,4 +70,4 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
