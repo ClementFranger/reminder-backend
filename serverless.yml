@@ -14,8 +14,8 @@ provider:
 
   environment:
     ACCOUNT: '166257563783'
-    DYNAMODB_TABLE: ${self:service}
     AWS_UTILS: 2
+    REMINDER_TABLE: '${self:service}'
 
   iamRoleStatements:
     - Effect: Allow
