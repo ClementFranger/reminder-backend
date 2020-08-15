@@ -23,20 +23,11 @@ provider:
        - dynamodb:GetItem
        - dynamodb:PutItem
        - dynamodb:Scan
-      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.REMINDER_TABLE}"
 
 functions:
-  get_reminder:
-    handler: reminder/dynamodb/get_reminder.get_reminder
-    events:
-      - http:
-          path: reminder/{id}
-          method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  put_reminder:
-    handler: reminder/dynamodb/put_reminder.put_reminder
+  put:
+    handler: reminder/lambdas.put
     events:
       - http:
           path: reminder
@@ -44,30 +35,11 @@ functions:
           cors: true
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  scan_reminders:
-    handler: reminder/dynamodb/scan_reminders.scan_reminders
+  today:
+    handler: reminder/lambdas.today
     events:
       - http:
           path: reminder
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  filter_scan_reminders:
-    handler: reminder/dynamodb/filter_scan_reminders.filter_scan_reminders
-    events:
-      - http:
-          path: reminder/filter
-          method: post
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  get_today_reminders:
-    handler: reminder/dynamodb/get_today_reminders.get_today_reminders
-    events:
-      - http:
-          path: reminder/today
-          method: get
-          cors: true
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
